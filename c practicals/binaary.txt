@@ -1,0 +1,141 @@
+#include "stdio.h"
+
+int dec2bin(int decimal){
+  int binary = 0; 
+  int zeros = 0;
+  while(decimal > 0){
+    binary = binary * 10 + decimal % 2;
+    if (decimal % 2 == 0 && binary == 0)  zeros++;
+    decimal = decimal / 2;
+    printf("%d %d\n", binary, decimal);
+  }
+  while (zeros > 0) { binary *= 10; zeros--; }
+  return binary;
+}
+
+
+int main(void) {
+  int decimal;
+  int binary, octal, hex;
+  scanf("%d", &decimal);
+  binary = dec2bin(decimal);
+  //octal = dec2oct(decimal);
+  //hex = dec2hex(decimal);
+  printf("binary = %d\n", binary);
+  //printf("octal = %d\n", octal);
+  //printf("hex = %d\n", hex);
+  return 0;
+}
+//////////////////////
+#include "stdio.h"
+#include "string.h"
+
+void strrev(char* S){
+  int right = strlen(S)-1;
+  int left = 0;
+  char t;
+  while(left < right){
+    t = S[left];
+    S[left++] = S[right];
+    S[right--] = t;
+  }
+  printf("\n");
+}
+
+char get_digit(int d){
+  switch(d){
+    case 10: return 'A';
+    case 11: return 'B';
+    case 12: return 'C';
+    case 13: return 'D';
+    case 14: return 'E';
+    case 15: return 'F';
+    default: return d + '0';
+  }
+}
+
+
+void conv(int decimal, int base, char b[]){
+  int i = 0; 
+  if(base != 2 && base != 8 && base != 16)
+    {strcpy(b,"NA"); return;} 
+  while(decimal > 0){
+    b[i] =  get_digit(decimal % base);
+    decimal /= base; 
+    i++;
+  }
+  strrev(b);
+}
+
+
+int main(void) {
+  int decimal;
+  char bin[20], oct[20], hex[20];
+  scanf("%d", &decimal);
+  conv(decimal, 2, bin);
+  printf("binary = %s\n", bin);
+  conv(decimal, 8, oct);
+  printf("octal = %s\n", oct );
+  conv(decimal, 16, hex);
+  printf("hex = %s\n", hex);
+  return 0;
+}
+///////////////
+#include <stdio.h> 
+#include <conio.h> 
+void swap(char *s1, char *s2) 
+{ 
+char temp; 
+temp = *s1; 
+*s1 = *s2; 
+*s2 = temp; 
+} 
+void reverse(char *str, int length) 
+{ 
+int start = 0; 
+int end = length -1; 
+while (start < end) 
+{ 
+swap(&str[start], &str[end]); 
+start++; 
+end--; 
+} 
+}  
+char* convert(int num, char str[100], int base) 
+{ 
+int i = 0; 
+if (num == 0) 
+{ 
+str[i++] = '0'; 
+str[i] = '\0'; 
+return str; 
+} 
+while (num != 0) 
+{ 
+int rem = num % base; 
+str[i++] = (rem > 9)? (rem-10) + 'a' : rem + '0'; 
+num = num/base; 
+} 
+str[i] = '\0'; // Append string terminator 
+// Reverse the string 
+reverse(str, i); 
+return str; 
+} 
+void main() 
+{ 
+char str[100]; 
+int n; 
+clrscr(); 
+printf("Enter the given decimal number : "); 
+scanf("%d",&n); 
+printf("\nThe Binary value : %s\n",convert(n,str,2)); 
+printf("\nThe Octal value : %s\n",convert(n,str,8)); 
+printf("\nThe Hexa value : %s\n",convert(n,str,16)); 
+getch(); 
+} 
+
+
+
+
+
+
